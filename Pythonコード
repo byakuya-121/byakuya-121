@@ -1,0 +1,98 @@
+import discord
+TOKEN= "(TOKENを挿入)"
+client=discord.Bot()
+
+@client.event
+async def on_ready():
+   print("-----------------------------")
+   print("The Bot is now ready for usr!")
+   print("-------------------")
+   print("System all:🟢")
+   print("------------------")
+
+
+@client.slash_command()
+async def hello(ctx):
+    await ctx.respond("こんにちは！")
+    
+    
+@client.slash_command()
+async def name_hello(ctx,name):
+    await ctx.respond(name+"さん(✿✪‿✪｡)ﾉｺﾝﾁｬ♡")
+
+@client.slash_command()
+async def serverinfo(ctx):
+  guild = ctx.message.guild
+  roles =[role for role in guild.roles]
+  text_channels = [text_channels for text_channels in guild.text_channels]
+  embed = discord.Embed(title=f"{guild.name}info",color=0x3683ff)
+  embed.add_field(name="管理者",value=f"{ctx.guild.owner}",inline=False)
+  embed.add_field(name="ID",value=f"{ctx.guild.id}",inline=False)
+  embed.add_field(name="チャンネル数",value=f"{len(text_channels)}",inline=False)
+  embed.add_field(name="ロール数",value=f"{len(roles)}",inline=False)
+  embed.add_field(name="サーバーブースター",value=f"{guild.premium_subscription_count}",inline=False)
+  embed.add_field(name="メンバー数",value=f"{guild.member_count}",inline=False)
+  embed.add_field(name="サーバー設立日",value=f"{guild.created_at}",inline=False)
+  embed.set_footer(text=f"実行者 : {ctx.author} ")
+  await ctx.send(embed=embed)
+
+@client.slash_command()
+async def userinfo(ctx):
+  embed = discord.Embed(title=f"user {ctx.author.name}",description="userinfo",color=0x3683ff)
+  embed.add_field(name="名前",value=f"{ctx.author.mention}",inline=False)
+  embed.add_field(name="ID",value=f"{ctx.author.id}",inline=False)
+  embed.add_field(name="ACTIVITY",value=f"{ctx.author.activity}",inline=False)
+  embed.add_field(name="TOP_ROLE",value=f"{ctx.author.top_role}",inline=False)
+  embed.add_field(name="discriminator",value=f"#{ctx.author.discriminator}",inline=False)
+  embed.add_field(name="サーバー参加",value=f"{ctx.author.joined_at.strftime('%d.%m.%Y, %H:%M Uhr')}",inline=False)
+  embed.add_field(name="アカウント作成",value=f"{ctx.author.created_at.strftime('%d.%m.%Y, %H:%M Uhr')}",inline=False)
+  embed.set_thumbnail(url=f"{ctx.author.avatar.url}")
+  embed.set_footer(text=f"実行者 : {ctx.author} ")
+  await ctx.send(embed=embed)
+print("User information system:Green🟢")
+
+@client.command()  # コマンドボタン一覧
+async def button(ctx):
+    view = Button()
+    await ctx.send(view=view)
+
+class Button(discord.ui.View):
+    def __init__(self):
+        super().__init__()
+        self.value = None
+  
+    
+@discord.ui.button(label="Hi🫂", style=discord.ButtonStyle.grey)
+async def button1(self, button: discord.ui.Button, interaction: discord.Interaction):
+    await interaction.response.send_message("おはこんばんにちは！私はマスターから生まれた白夜ちゃんBotです！何か手伝えることがありますか？😊")
+@discord.ui.button(label="白夜ちゃんは何が好き(●'◡'●)？", style=discord.ButtonStyle.blurple)
+async def button2(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.send_message("私はマスターによって開発されたBotです。しいて言うならマスターである白夜総会の創設者ですね！")
+@discord.ui.button(label="大好き🩷", style=discord.ButtonStyle.green)
+async def button3(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.send_message("はい！私もあなたの事が大好きですよ？！")
+@discord.ui.button(label="ボタン4", style=discord.ButtonStyle.red)
+async def button4(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.send_message("ボタン4が押されました！")
+print("Button function:Green🟢")
+
+@client.command()
+async def ping(ctx):
+    raw_ping = client.latency 
+    ping = round(raw_ping * 1000)
+    await ctx.reply(f"Pong!\nBotのPing値は{ping}msです。")
+
+@client.event
+async def on_message(message):
+    # メッセージ送信者がボットの場合は無視する
+    if message.author.bot:
+        return
+
+    # メッセージの内容をオウム返しする
+    received_message = message.content # 受信したメッセージ
+    print(received_message) # 受信したメッセージを出力
+    await message.channel.send(received_message) # 受信したメッセージを送信
+    return
+
+
+client.run(TOKEN)
