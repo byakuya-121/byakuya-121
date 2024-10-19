@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 
 access_token =  'YOU_CHANNEL_ACCESS_TOKEN'  # LINE Botのアクセストークン
-banned_keywords = ['badword1', 'badword2', 'badword3']
+banned_keywords = ['badword1', 'badword2', 'badword3']  #禁止ワード設定
 reply_url = 'https://api.line.me/v2/bot/message/reply'
 headers = {
     'Content-Type': 'application/json',
