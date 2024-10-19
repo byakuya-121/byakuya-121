@@ -9,7 +9,7 @@ line_bot_api = LineBotApi(''YOU_CHANNEL_ACCESS_TOKEN')
 handler = WebhookHandler('YOUR_CHANNEL_SECRET')
 
 # 権限を持つユーザーのリスト
-authorized_users = ['Ua0adfa16cd8c5778335c034d36ffa292', 'USER_ID_2']
+authorized_users = ['User_1', 'USER_ID_2']
                      #//Administrators一覧//
                       #自分
 @app.route("/callback", methods=['POST'])
