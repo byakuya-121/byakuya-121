@@ -38,7 +38,7 @@ TEXT_WIDTH = 40 # width of the text box
 WIDTH_GUI = 50  #Processing GUI width
 LOADING_GUI = 5000 # 1000 = 1 second
 # **特定のパスワード**
-SET_PASSWORDS = 'ito' #Insert the password of the password number
+SET_PASSWORDS = '12345' #Insert the password of the password number
 print ('===========Configured password======================')
 print("Your settings password is :" + SET_PASSWORDS )
 print ('====================================================')
