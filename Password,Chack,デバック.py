@@ -52,7 +52,7 @@ root.configure(bg='#333333')
 # GUI setup icon
 root.iconbitmap(os.path.abspath('images/OIP.ico'))
 # Image setup
-img = ImageTk.PhotoImage(Image.open(os.path.abspath('E:/VSCコード保存ファイル/文化祭準備プログラムコード/images/Shun.png')))
+img = ImageTk.PhotoImage(Image.open(os.path.abspath('<you floruda- set> ')))
 
 # Canvas setup
 c = tk.Canvas(root, width=400, height=250)
