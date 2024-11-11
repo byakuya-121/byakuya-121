@@ -1,0 +1,109 @@
+import discord 
+from discord.ext import commands 
+
+TOKEN = 'TOKEN挿入'
+
+
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix='$', intents=intents)
+intents.members = True # メンバー関連のイベントを有効にする
+@bot.event
+async def on_ready():
+    print("ログインしました！")
+    await bot.change_presence(activity=discord.Game(name="Amau-🍀Bot起動中!!"))
+    
+    
+@bot.event 
+async def on_member_join(member): # 新規メンバーが参加したときの挨拶メッセージ 
+    channel = member.guild.system_channel # サーバーのシステムチャンネルを取得 
+    if channel is not None: embed = discord.Embed(title="Amau-雑談鯖に新しいメンバーが参加しました！", description=f"ようこそ! {member.mention} さん！ ＃認証でメンバーロールを貰ってね!!", color=0x00ff00) 
+    embed.add_field(name="名前", value=member.name, inline=True) 
+    embed.add_field(name="ディスクリミネータ", value=f"#{member.discriminator}", inline=True) 
+    embed.add_field(name="ユーザーID", value=member.id, inline=True) 
+    embed.add_field(name="アカウント作成日", value=member.created_at.strftime("%Y-%m-%d %H:%M:%S"), inline=True)
+    await channel.send(embed=embed)
+
+@bot.command()
+async def ping(ctx):
+    raw_ping = bot.latency
+    ping = round(raw_ping * 1000)
+    await ctx.reply(f"Pingの検証結果!\nBotのPing値は{ping}msです。")
+
+@bot.command(pass_content=True)
+@commands.has_permissions(administrator=True)
+async def nick(ctx, member: discord.Member, nick):
+  await member.edit(nick=nick)
+  embed = discord.Embed(title="ニックネームを変更しました",description=f"変更された人物: {member.mention}",color=0xffffff)
+  await ctx.send(embed=embed)
+
+@bot.command()
+async def serverinfo(ctx):
+  guild = ctx.message.guild
+  roles =[role for role in guild.roles]
+  text_channels = [text_channels for text_channels in guild.text_channels]
+  embed = discord.Embed(title=f"{guild.name}info",color=0x3683ff)
+  embed.add_field(name="管理者",value=f"{ctx.guild.owner}",inline=False)
+  embed.add_field(name="ID",value=f"{ctx.guild.id}",inline=False)
+  embed.add_field(name="チャンネル数",value=f"{len(text_channels)}",inline=False)
+  embed.add_field(name="ロール数",value=f"{len(roles)}",inline=False)
+  embed.add_field(name="サーバーブースター",value=f"{guild.premium_subscription_count}",inline=False)
+  embed.add_field(name="メンバー数",value=f"{guild.member_count}",inline=False)
+  embed.add_field(name="サーバー設立日",value=f"{guild.created_at}",inline=False)
+  embed.set_footer(text=f"実行者 : {ctx.author} ")
+  await ctx.send(embed=embed)
+
+@bot.command()
+async def userinfo(ctx):
+  embed = discord.Embed(title=f"user {ctx.author.name}",description="userinfo",color=0x3683ff)
+  embed.add_field(name="名前",value=f"{ctx.author.mention}",inline=False)
+  embed.add_field(name="ID",value=f"{ctx.author.id}",inline=False)
+  embed.add_field(name="ACTIVITY",value=f"{ctx.author.activity}",inline=False)
+  embed.add_field(name="TOP_ROLE",value=f"{ctx.author.top_role}",inline=False)
+  embed.add_field(name="discriminator",value=f"#{ctx.author.discriminator}",inline=False)
+  embed.add_field(name="サーバー参加",value=f"{ctx.author.joined_at.strftime('%d.%m.%Y, %H:%M Uhr')}",inline=False)
+  embed.add_field(name="アカウント作成",value=f"{ctx.author.created_at.strftime('%d.%m.%Y, %H:%M Uhr')}",inline=False)
+  embed.set_thumbnail(url=f"{ctx.author.avatar.url}")
+  embed.set_footer(text=f"実行者 : {ctx.author} ")
+  await ctx.send(embed=embed)
+
+
+@bot.command()
+async def button(ctx):
+    view = Button()
+    await ctx.send(view=view)
+
+class Button(discord.ui.View):
+    def __init__(self):
+        super().__init__()
+        self.value = None
+        
+    @discord.ui.button(label="挨拶🗣️", style=discord.ButtonStyle.grey)
+    async def button1(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.send_message("よろしくお願いいたします。私はAmau-🍀Botと申します。以後、お見知りおきを!!")
+    @discord.ui.button(label="ボタン2", style=discord.ButtonStyle.blurple)
+    async def button2(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.send_message("ボタン2が押されました！")
+    @discord.ui.button(label="ボタン3", style=discord.ButtonStyle.green)
+    async def button3(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.send_message("ボタン3が押されました！")
+    @discord.ui.button(label="ボタン4", style=discord.ButtonStyle.red)
+    async def button4(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await interaction.response.send_message("ボタン4が押されました！")
+    
+
+
+"""
+@bot.command()
+async def oumu(message):
+    if message.author == bot.user:
+        return
+
+    # 簡単なオウム返し
+    if message.content:
+        await message.channel.send(message.content)
+"""
+
+
+
+bot.run('TOKEN')
