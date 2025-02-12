@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 import datetime # import datetimeで日時を取得するモジュール。
 import time # import time で待機時間を追加する  import　モジュール。
+import logging #import logging でDiscord botのログイン記録をしてくれる。
  #コマンドの内容によってはimport モジュールを追加する。
 
 """以下はimportのモジュールの追加方法です。""" 
@@ -12,6 +13,7 @@ import time # import time で待機時間を追加する  import　モジュー�
 """
 ・pip install discord.py
 ・pip install discord
+・pip install logging
 ・pip install time 
 """
 #正直言ってimport Time は無くても別に問題はないが、もし要らない場合はソースコード内にある time.sleep() を消して実行して下さい。
