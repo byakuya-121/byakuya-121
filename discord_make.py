@@ -22,10 +22,10 @@ import logging #import logging でDiscord botのログイン記録をしてく�
 """
 #正直言ってimport Time は無くても別に問題はないが、もし要らない場合はソースコード内にある time.sleep() を消して実行して下さい。
 #======================================================================
-
+ #変数 code*
 TOKEN = 'YOUR_BOT_TOKEN'    #TOKEN という変数に代入する。
  # ここのYOUR_BOT_TOKENを消してtokenをセットアップする。
-
+BOT_VERSION = float('1.37')
 #======================================================================
 # botの起動とサーバーへの接続
  #このソースコードは実行した時に接続エラーにならないようにしています。
@@ -117,7 +117,7 @@ time.sleep(5.2)
 print("**************************************************")
 print ("<<<on_ready>>>")#IRC　
 print("!*set token Code**"+ TOKEN ) # *!set token chack*
-print('Ver' + BOT_VERSION) # !*set bot version**
+print('Ver' + str(BOT_VERSION)) # !*set bot version**
 print ("///Botが起動しました...!! ///")
 print("**************************************************")
 # Discord bot settings code log*
