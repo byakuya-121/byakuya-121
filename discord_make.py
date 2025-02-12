@@ -25,7 +25,7 @@ import logging #import logging でDiscord botのログイン記録をしてく�
  #変数 code*
 TOKEN = 'YOUR_BOT_TOKEN'    #TOKEN という変数に代入する。
  # ここのYOUR_BOT_TOKENを消してtokenをセットアップする。
-BOT_VERSION = float('1.37')
+BOT_VERSION = float(1.37)
 #======================================================================
 # botの起動とサーバーへの接続
  #このソースコードは実行した時に接続エラーにならないようにしています。
