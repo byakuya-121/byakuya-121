@@ -10,6 +10,10 @@ import logging #import logging でDiscord botのログイン記録をしてく�
 
 """以下はimportのモジュールの追加方法です。""" 
 #コメント欄:
+#Discord bot 制作の参照動画&記事： URLのリンクを開きたい場合は ctrl + 参照URLをクリック してください。
+# ・https://qiita.com/1ntegrale9/items/9d570ef8175cf178468f　(Pythonで実用Discord Bot(discordpy解説))
+# ・https://www.youtube.com/@dainy_san　(Python　Discord bot の作り方解説動画のチャンネル)
+   #https://github.com/dainy117/botcode/tree/main (動画参照元のGit hub)
 """
 ・pip install discord.py
 ・pip install discord
