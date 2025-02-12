@@ -5,9 +5,10 @@ import discord
 from discord.ext import commands
 import datetime # import datetimeで日時を取得するモジュール。
 import time # import time で待機時間を追加する  import　モジュール。
+ #コマンドの内容によってはimport モジュールを追加する。
 
 """以下はimportのモジュールの追加方法です。""" 
-#コメント欄
+#コメント欄:
 """
 ・pip install discord.py
 ・pip install discord
@@ -21,6 +22,7 @@ TOKEN = 'YOUR_BOT_TOKEN'    #TOKEN という変数に代入する。
 
 #======================================================================
 # botの起動とサーバーへの接続
+ #このソースコードは実行した時に接続エラーにならないようにしています。
 print("="*30)
 print('--Sever connection Run code**--')
 time.sleep(4)
@@ -42,10 +44,6 @@ bot.load_extension('cogs.users')
 print("="*30)
 time.sleep(2.1)
 print("<Sever connection Run END!...>")
-# Load user data from JSON file
-if os.path.exists(USER_DATA_FILE):
-        with open(USER_DATA_FILE, 'r') as f:
-            user_data = json.load(f)
 #================================================================
 
 # Botのインスタンスを生成する。
@@ -107,12 +105,36 @@ async def on_member_remove(member): # メンバーが退出したときのメッ
      # add_field()で埋め込み型のメッセージの中身にフィールドを追加する。
      # 最後にembed()で作ったembedをchannel.send()に��してメッセージを送信する。
 
-
+#================================================================
+#   ////Discord bot settings code log///
+time.sleep(5.2)
+print("**************************************************")
+print ("<<<on_ready>>>")#IRC　
+print("!*set token Code**"+ TOKEN ) # *!set token chack*
+print('Ver' + BOT_VERSION) # !*set bot version**
+print ("///Botが起動しました...!! ///")
+print("**************************************************")
+# Discord bot settings code log*
+ #なおこのsettings code log*はBotの実行時間やIDを.txt形式で保存されるソースコードのため、使用しない場合はコメントアウト#でしてください。
+Log_bot = logging.INFO
+logging.basicConfig(filename='discordbot.txt', level=Log_bot, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s ')
+# ディレクトリの内容を表示
+directory_path = r'E:< Botのログを保存するファイル名>'
+log_file_path = os.path.join(directory_path, 'discordbot.log')
+print(log_file_path)
+print("--Set all check system startup ⚙️--\n")
+#/*logging.info('//This is an info log message.')
+#/*logging.error('//This is an error log message.')
+# Discord bot settings
+#//// Discord bot settings code log///
+#**load the bot token from a file!**
+#seting the Discord bot Token!**         
+bot.run(TOKEN) # TOD
 # Botの起動
     # bot.run()を実行するとBotが動き始める。
     # Discord Developer Portalで取得したBOTのトークンをbot.run()に��す。
-bot.run(TOKEN)
- # YOUR_BOT_TOKENはDiscord Developer Portalで取得したBOTのトークンを置き換える。
- # 以下のbot.run()ではBotを起動する。
+ # //// END codeing of bot Run ///// 
+#   *Check source code running count*
+ #/////////////////////////////////////
  # ただし、BOTのトークンはGitHubなどに公開しないようにすることに推奨される。
  
