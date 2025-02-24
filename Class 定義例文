@@ -1,0 +1,19 @@
+class Add_class:
+    def __init__(self):
+        print("Restting class*!")
+        self.count = 0
+    
+    def add(self, num):
+        self.count += num
+        return self.count
+
+
+obj = Add_class()
+print(obj.add(5))
+print(obj.add(3))
+print(obj.add(7))
+
+#実行結果:
+ #5
+ #8
+ #15
