@@ -1,0 +1,105 @@
+# Crime tracking tool🧰
+import tkinter as tk
+from tkinter import ttk, messagebox
+import requests
+
+class CyberSecurityTool:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("サイバーセキュリティツール")
+        self.create_widgets()
+
+    def create_widgets(self):
+        tab_control = ttk.Notebook(self.root)
+
+        self.tab_ip = ttk.Frame(tab_control)
+        self.tab_hash = ttk.Frame(tab_control)
+        self.tab_server_info = ttk.Frame(tab_control)
+
+        tab_control.add(self.tab_ip, text='IPアドレスチェック')
+        tab_control.add(self.tab_hash, text='ファイルハッシュチェック')
+        tab_control.add(self.tab_server_info, text='Webサーバー情報')
+
+        tab_control.pack(expand=1, fill='both')
+
+        self.create_ip_tab()
+        self.create_hash_tab()
+        self.create_server_info_tab()
+
+    def create_ip_tab(self):
+        ttk.Label(self.tab_ip, text="IPアドレスを入力").pack(pady=5)
+        self.ip_entry = ttk.Entry(self.tab_ip, width=30)
+        self.ip_entry.pack(pady=5)
+        ttk.Button(self.tab_ip, text="チェック", command=self.check_ip).pack(pady=5)
+
+    def create_hash_tab(self):
+        ttk.Label(self.tab_hash, text="ファイルのSHA256ハッシュを入力").pack(pady=5)
+        self.hash_entry = ttk.Entry(self.tab_hash, width=64)
+        self.hash_entry.pack(pady=5)
+        ttk.Button(self.tab_hash, text="チェック", command=self.check_hash).pack(pady=5)
+
+    def create_server_info_tab(self):
+        ttk.Label(self.tab_server_info, text="URLを入力（例: https://www.example.com）").pack(pady=5)
+        self.url_entry = ttk.Entry(self.tab_server_info, width=50)
+        self.url_entry.pack(pady=5)
+        ttk.Button(self.tab_server_info, text="情報を取得", command=self.get_server_info).pack(pady=5)
+        self.server_info_text = tk.Text(self.tab_server_info, height=10, width=80)
+        self.server_info_text.pack(pady=5)
+
+    def check_ip(self):
+        ip = self.ip_entry.get().strip()
+        if not ip:
+            messagebox.showwarning("入力エラー", "IPアドレスを入力してください。")
+            return
+
+        try:
+            response = requests.get(f"https://ipapi.co/{ip}/json/")
+            data = response.json()
+            if response.status_code == 200:
+                info = (
+                    f"IPアドレス: {data.get('ip', '情報なし')}\n"
+                    f"国: {data.get('country_name', '情報なし')}\n"
+                    f"地域: {data.get('region', '情報なし')}\n"
+                    f"都市: {data.get('city', '情報なし')}\n"
+                    f"郵便番号: {data.get('postal', '情報なし')}\n"
+                    f"緯度: {data.get('latitude', '情報なし')}\n"
+                    f"経度: {data.get('longitude', '情報なし')}\n"
+                    f"プロバイダ: {data.get('org', '情報なし')}\n"
+                )
+                self.display_info(info)
+            else:
+                messagebox.showerror("エラー", "IP情報の取得に失敗しました。")
+        except requests.exceptions.RequestException as e:
+            messagebox.showerror("エラー", f"情報の取得中にエラーが発生しました。\n{e}")
+
+    def check_hash(self):
+        # ファイルハッシュチェックの処理
+        pass
+
+    def get_server_info(self):
+        url = self.url_entry.get().strip()
+        if not url:
+            messagebox.showwarning("入力エラー", "URLを入力してください。")
+            return
+
+        try:
+            response = requests.get(url)
+            headers = response.headers
+            server_info = (
+                f"サーバー: {headers.get('Server', '情報なし')}\n"
+                f"コンテンツタイプ: {headers.get('Content-Type', '情報なし')}\n"
+                f"コンテンツ長さ: {headers.get('Content-Length', '情報なし')}\n"
+                f"日付: {headers.get('Date', '情報なし')}\n"
+            )
+            self.display_info(server_info)
+        except requests.exceptions.RequestException as e:
+            messagebox.showerror("エラー", f"情報の取得中にエラーが発生しました。\n{e}")
+
+    def display_info(self, info):
+        self.server_info_text.delete(1.0, tk.END)
+        self.server_info_text.insert(tk.END, info)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = CyberSecurityTool(root)
+    root.mainloop()
