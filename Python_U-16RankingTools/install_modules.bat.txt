@@ -1,0 +1,4 @@
+@echo off
+pip install customtkinter
+pip install requests
+pip install pillow
